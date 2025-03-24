@@ -27,8 +27,8 @@ const weatherStore = useWeatherStore();
 
 const { currentWeather } = storeToRefs(weatherStore);
 
-const weatherInfo = computed(() => currentWeather.value.weather[0]);
-const weatherData = computed(() => currentWeather.value.main);
-const city = computed(() => currentWeather.value.name);
-const temperature = computed(() => Math.round(weatherData.value.temp));
+const weatherInfo = computed(() => currentWeather.value?.weather[0]);
+const weatherData = computed(() => currentWeather.value?.main);
+const city = computed(() => currentWeather.value?.name);
+const temperature = computed(() => Math.round(weatherData.value?.temp));
 </script>

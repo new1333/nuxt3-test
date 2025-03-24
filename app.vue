@@ -1,22 +1,21 @@
 <template>
-  <div>
-    <div v-if="isLoading">loading...</div>
-    <div v-else-if="error">
-      {{ error }}
-    </div>
-    <div v-else>
-      <Weather />
-    </div>
+  <div @click="handleClick">
+    <Weather />
   </div>
 </template>
 
 <script setup>
 const weatherStore = useWeatherStore();
 
-const { error, isLoading } = storeToRefs(weatherStore);
-const { getWeather } = weatherStore;
+weatherStore.getWeather();
+
+async function handleClick() {
+  weatherStore.refreshData();
+}
 
 onMounted(() => {
-  getWeather();
+  setTimeout(() => {
+    weatherStore.refreshData();
+  }, 3000);
 });
 </script>

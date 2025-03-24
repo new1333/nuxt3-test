@@ -8,7 +8,6 @@ const weatherApiBaselUrl = `https://api.openweathermap.org/data/2.5/weather?q=${
 export const useWeatherStore = defineStore("weatherStore", {
   state: () => {
     return {
-      loading: true,
       currentWeather: {},
       error: null,
     };
@@ -19,20 +18,27 @@ export const useWeatherStore = defineStore("weatherStore", {
   actions: {
     async getWeather() {
       try {
-        const res = await axios.get(weatherApiBaselUrl).finally(() => {
-          this.loading = false;
-        });
-        this.currentWeather = res.data;
+        const cookie = useCookie("weather");
+        const { data } = await useFetch(weatherApiBaselUrl);
+        cookie.value = data.value;
+        this.currentWeather = data.value;
         this.error = null;
       } catch (error) {
         this.error = error;
-        if (import.meta.client) {
-          toast(error.message, {
-            autoClose: 1000,
-          });
-        }
+      }
+    },
+    async refreshData() {
+      try {
+        const cookie = useCookie("weather");
+        const res = await $fetch(weatherApiBaselUrl);
+        this.currentWeather = res;
+        this.error = null;
+        cookie.value = res;
+      } catch (error) {
+        toast(error.message, {
+          autoClose: 1000,
+        });
       }
     },
   },
-  persist: true,
 });
