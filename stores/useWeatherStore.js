@@ -19,6 +19,10 @@ export const useWeatherStore = defineStore("weatherStore", {
     async getWeather() {
       try {
         const cookie = useCookie("weather");
+        if (cookie.value) {
+          this.currentWeather = cookie.value;
+          return;
+        }
         const { data } = await useFetch(weatherApiBaselUrl);
         cookie.value = data.value;
         this.currentWeather = data.value;
