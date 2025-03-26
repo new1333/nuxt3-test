@@ -9,5 +9,13 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
+  routeRules: {
+    "/": {
+      redirect: {
+        to: "/weather",
+      },
+    },
+  },
+
   modules: ["@pinia/nuxt", "pinia-plugin-persistedstate/nuxt"],
 });
