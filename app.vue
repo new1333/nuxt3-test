@@ -1,6 +1,8 @@
 <template>
-  <div @click="handleClick">
-    <Weather />
+  <div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 

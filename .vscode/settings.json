@@ -1,0 +1,25 @@
+{
+  "scss.validate": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "i18n-ally.localesPaths": "./lang",
+  "i18n-ally.displayLanguage": "en",
+  "i18n-ally.sourceLanguage": "en",
+  "cSpell.words": [
+    "Cookiebot",
+    "crazyegg",
+    "eissn",
+    "Funder",
+    "Funders",
+    "highcardinality",
+    "issn",
+    "Mathjax",
+    "timeframe",
+    "vueuse"
+  ],
+  "eslint.useFlatConfig": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit"
+  }
+}
