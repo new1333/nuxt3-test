@@ -1,4 +1,43 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { toast } from "vue3-toastify";
+
+const weatherStore = useWeatherStore();
+const { setWeatherData } = weatherStore;
+
+const cookie = useCookie<WeatherDataResponse | null>("weatherData");
+const noMounted = useCookie<boolean>("noMounted");
+
+const { data, execute } = await useFetch("/api/getWeather", {
+  immediate: false,
+});
+
+if (!cookie.value) {
+  noMounted.value = true;
+  await execute();
+  if (data.value) {
+    cookie.value = data.value;
+  }
+} else {
+  data.value = cookie.value;
+}
+
+setWeatherData(data.value);
+
+onMounted(async () => {
+  if (noMounted.value) {
+    noMounted.value = false;
+    return;
+  }
+  try {
+    const res = await $fetch("/api/getWeather", { retry: 0 });
+    setWeatherData(res);
+  } catch (error) {
+    toast("请求失败", {
+      autoClose: 1000,
+    });
+  }
+});
+</script>
 
 <template>
   <div>
@@ -92,33 +131,3 @@
     <Weather />
   </div>
 </template>
-
-<style lang="scss" scoped>
-h1 {
-  @apply text-2xl font-bold pt-4 pb-8;
-}
-
-h2 {
-  @apply text-lg text-gray-700 font-bold pt-4 pb-4;
-}
-
-p {
-  @apply max-w-4xl pb-4;
-}
-
-ul {
-  @apply list-disc ml-4;
-}
-
-ol {
-  @apply list-decimal ml-4;
-}
-
-a {
-  @apply text-blue-800;
-}
-
-code {
-  @apply font-mono text-xs bg-gray-700 text-gray-100 p-0.5 rounded;
-}
-</style>
