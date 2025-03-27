@@ -13,6 +13,9 @@ export default defineNuxtConfig({
       "composables/*/index.{ts,js,mjs,mts}",
       // ... or scan all modules within given directory
       "composables/**",
+      "stores",
+      "stores/*/index.{ts,js,mjs,mts}",
+      "stores/**",
     ],
   },
 
