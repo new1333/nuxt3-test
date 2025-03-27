@@ -3,12 +3,10 @@ const weatherStore = useWeatherStore();
 
 const { loading, currentWeather } = storeToRefs(weatherStore);
 
-await callOnce(async () => {
-  // only call in server
-  if (import.meta.server) {
-    await weatherStore.fetchWeatherDataWithCache();
-  }
-});
+// only call in server
+if (import.meta.server) {
+  await weatherStore.fetchWeatherDataWithCache();
+}
 
 // in client, always async overwrite with the latest data from the API
 // but if server render has no cookie cache, server will call the api, so no need to call again in client
