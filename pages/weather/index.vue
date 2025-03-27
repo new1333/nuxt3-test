@@ -9,7 +9,10 @@ await callOnce(async () => {
 });
 
 // in client, always async overwrite with the latest data from the API
+// but if server render has no cookie cache, server will call the api, so no need to call again in client
+// if server render has cookie cache, client will async overwrite with the latest data from the API
 onMounted(() => {
+  if (weatherStore.fetchedDataInSsr) return;
   weatherStore.fetchWeatherData();
 });
 </script>

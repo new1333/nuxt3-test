@@ -4,6 +4,7 @@ import type { WeatherDataResponse } from "~/types/weather/Weather";
 interface IWeatherState {
   currentWeather: WeatherDataResponse | null;
   error: any;
+  fetchedDataInSsr: boolean;
 }
 
 export const useWeatherStore = defineStore("weatherStore", {
@@ -11,6 +12,7 @@ export const useWeatherStore = defineStore("weatherStore", {
     return {
       currentWeather: null,
       error: null,
+      fetchedDataInSsr: false,
     };
   },
   actions: {
@@ -32,6 +34,7 @@ export const useWeatherStore = defineStore("weatherStore", {
     async fetchWeatherData() {
       try {
         const res = await $fetch("/api/getWeather");
+        this.fetchedDataInSsr = import.meta.server;
         this.setWeatherData(res);
       } catch (error) {
         this.error = error;
