@@ -19,14 +19,12 @@ export const useWeatherStore = defineStore("weatherStore", {
     },
 
     async fetchWeatherDataWithCache() {
-      const weatherDataCookie = useCookie<WeatherDataResponse | null>(
-        "weatherData"
-      );
-      if (!weatherDataCookie.value) {
+      const weatherCookie = useWeatherCookie();
+      if (!weatherCookie.value) {
         await this.fetchWeatherData();
-        weatherDataCookie.value = this.currentWeather;
+        weatherCookie.value = this.currentWeather;
       } else {
-        this.setWeatherData(weatherDataCookie.value);
+        this.setWeatherData(weatherCookie.value);
       }
     },
 
@@ -37,7 +35,7 @@ export const useWeatherStore = defineStore("weatherStore", {
       } catch (error) {
         this.error = error;
         if (import.meta.client) {
-          toast("请求失败", {
+          toast("fetch weather api error", {
             autoClose: 1000,
           });
         }
