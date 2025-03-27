@@ -1,4 +1,5 @@
 import { toast } from "vue3-toastify";
+import type { WeatherDataResponse } from "~/types/weather/Weather";
 
 interface IWeatherState {
   currentWeather: WeatherDataResponse | null;

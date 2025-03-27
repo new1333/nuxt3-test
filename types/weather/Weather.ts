@@ -38,7 +38,7 @@ interface Sys {
   sunset: number;
 }
 
-interface WeatherDataResponse {
+export interface WeatherDataResponse {
   coord: Coord;
   weather: WeatherItem[];
   base: string;
