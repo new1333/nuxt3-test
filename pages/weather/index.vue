@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const weatherStore = useWeatherStore();
 
+const { loading, currentWeather } = storeToRefs(weatherStore);
+
 await callOnce(async () => {
   // only call in server
   if (import.meta.server) {
@@ -18,7 +20,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div v-if="!currentWeather && loading">loading...</div>
+  <div v-else>
     <h1 class="text-2xl font-bold pt-4 pb-8">Welcome</h1>
     <p class="max-w-4xl pb-4">
       You have reached the landing page of the Logoipsum company. Now, let's get

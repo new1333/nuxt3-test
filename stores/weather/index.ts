@@ -5,6 +5,7 @@ interface IWeatherState {
   currentWeather: WeatherDataResponse | null;
   error: any;
   fetchedDataInSsr: boolean;
+  loading: boolean;
 }
 
 export const useWeatherStore = defineStore("weatherStore", {
@@ -12,6 +13,7 @@ export const useWeatherStore = defineStore("weatherStore", {
     return {
       currentWeather: null,
       error: null,
+      loading: false,
       fetchedDataInSsr: false,
     };
   },
@@ -33,7 +35,10 @@ export const useWeatherStore = defineStore("weatherStore", {
 
     async fetchWeatherData() {
       try {
-        const res = await $fetch("/api/getWeather");
+        this.loading = true;
+        const res = await $fetch("/api/getWeather").finally(() => {
+          this.loading = false;
+        });
         this.fetchedDataInSsr = import.meta.server;
         this.setWeatherData(res);
       } catch (error) {
