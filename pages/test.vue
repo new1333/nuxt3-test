@@ -4,7 +4,7 @@ import TestComp from "~/components/TestComp.vue";
 
 <template>
   <div>
-    <div>testpage</div>
+    <div>testpage1</div>
 
     <div>
       <TestComp />
