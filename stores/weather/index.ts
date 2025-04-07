@@ -36,7 +36,12 @@ export const useWeatherStore = defineStore("weatherStore", {
     async fetchWeatherData() {
       try {
         this.loading = true;
-        const res = await $fetch("/api/getWeather").finally(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+        const res = await $fetch("/api/getWeather", {
+          timeout: 3000,
+          signal,
+        }).finally(() => {
           this.loading = false;
         });
         this.fetchedDataInSsr = import.meta.server;

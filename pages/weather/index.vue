@@ -19,7 +19,7 @@ onMounted(() => {
 
 <template>
   <div v-if="!currentWeather && loading">loading...</div>
-  <div v-else>
+  <div @click="weatherStore.fetchWeatherData" v-else>
     <h1 class="text-2xl font-bold pt-4 pb-8">Welcome</h1>
     <p class="max-w-4xl pb-4">
       You have reached the landing page of the Logoipsum company. Now, let's get
